@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GPSpeedo</string>
+    <string name="title_toggle">HUD</string>
+    <string name="title_set_units">Set Units</string>
+    <string name="title_kmph">Km/h</string>
+    <string name="title_mph">miles/h</string>
+    <string name="title_knots">Knots</string>
+    <string name="title_mps">m/s</string>
+	<string name="title_quit">Quit</string>
+</resources>

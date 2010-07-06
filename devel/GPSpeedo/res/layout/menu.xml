@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<menu xmlns:android="http://schemas.android.com/apk/res/android">  
+	<item
+		android:id="@+id/menu_toggle"
+		android:title="@string/title_toggle"
+		/>
+	<item
+		android:id="@+id/submenu"
+		android:title="@string/title_set_units">
+		<menu>
+			<item
+				android:id="@+id/kmph"
+				android:title="@string/title_kmph"
+				/>
+			<item
+				android:id="@+id/mph"
+				android:title="@string/title_mph"
+				/>
+			<item
+				android:id="@+id/knots"
+				android:title="@string/title_knots"
+				/>
+			<item
+				android:id="@+id/mps"
+				android:title="@string/title_mps"
+				/>
+		</menu>
+	</item>
+	<item
+		android:id="@+id/quit"
+		android:title="@string/title_quit"
+		/>
+</menu>	
