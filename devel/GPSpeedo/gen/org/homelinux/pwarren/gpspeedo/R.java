@@ -23,7 +23,6 @@ public final class R {
         public static final int menu_toggle=0x7f060002;
         public static final int mph=0x7f060005;
         public static final int mps=0x7f060007;
-        public static final int quit=0x7f060008;
         public static final int speed_view=0x7f060001;
         public static final int submenu=0x7f060003;
     }

@@ -26,8 +26,4 @@
 				/>
 		</menu>
 	</item>
-	<item
-		android:id="@+id/quit"
-		android:title="@string/title_quit"
-		/>
 </menu>	

@@ -1,7 +1,6 @@
 package org.homelinux.pwarren.gpspeedo;
 
 import android.app.Activity;
-
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -44,9 +43,6 @@ public class GPSPeedo extends Activity {
     		} else {
     			reMirror();
     		}
-    		return true;
-    	case R.id.quit:
-    		finish();
     		return true;
     	case R.id.kmph:
     		// change to specified units
@@ -113,13 +109,24 @@ public class GPSPeedo extends Activity {
     	tv.setText(ReverseString.reverseIt(tv.getText().toString()));
     	mirror = true;
     }
+    
+    @Override
+    public void onPause() {
+    	lm.removeUpdates(locationListener);
+    	super.onPause();
+    }
+    
+    @Override
+    public void onResume() {
+    	lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+    	super.onResume();
+    }
 
-    private class MyLocationListener implements LocationListener 
-    {
+    private class MyLocationListener implements LocationListener {
     	Integer counter = 0;
-        @Override
+    	
         public void onLocationChanged(Location loc) {	
-            if (loc != null) {
+        	if (loc != null) {
             	String speed_string;
                 Double d1;
                 Long t1;
@@ -152,15 +159,12 @@ public class GPSPeedo extends Activity {
                 // convert from m/s to specified units
                 switch (units) {
                 case R.id.kmph:
-                	Log.i("GPSpeedo", "Converting to : Km/h : " + R.id.kmph);
                 	speed = speed * 3.6d;
                 	break;
                 case R.id.mph:
-                	Log.i("GPSpeedo", "Converting to : mi/h : " + R.id.mph);
                 	speed = speed * 2.23693629d;
                 	break;
                 case R.id.knots:
-                	Log.i("GPSpeedo", "Converting to : Knots : " + R.id.knots);
                 	speed = speed * 1.94384449d;
                 	break;
                 }
@@ -173,21 +177,19 @@ public class GPSPeedo extends Activity {
             }
         }
 
-        @Override
         public void onProviderDisabled(String provider) {
             // TODO Auto-generated method stub
             Log.i("GPSpeedo", "provider disabled : " + provider);
         }
 
-        @Override
+ 
         public void onProviderEnabled(String provider) {
             // TODO Auto-generated method stub
             Log.i("GPSpeedo", "provider enabled : " + provider);
         }
 
-        @Override
-        public void onStatusChanged(String provider, int status, 
-            Bundle extras) {
+   
+        public void onStatusChanged(String provider, int status, Bundle extras) {
             // TODO Auto-generated method stub
             Log.i("GPSpeedo", "status changed : " + extras.toString());
         }
