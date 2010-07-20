@@ -1,11 +1,17 @@
 package org.homelinux.pwarren.gpspeedo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
 import android.graphics.Typeface;
@@ -60,6 +66,22 @@ public class GPSPeedo extends Activity {
     		// change to specified units
     		units = R.id.mps; 
     		return true;
+    	case R.id.colour_red:
+    		tv.setTextColor(getResources().getColor(R.color.red));
+    		return true;
+    	case R.id.colour_green:
+    		tv.setTextColor(getResources().getColor(R.color.green));
+    		return true;
+    	case R.id.colour_blue:
+    		tv.setTextColor(getResources().getColor(R.color.blue));
+    		return true;
+    	case R.id.colour_white:
+    		tv.setTextColor(getResources().getColor(R.color.white));
+    		return true;
+    	case R.id.about_menu:
+    		// show about dialog
+    		about();
+    		return true;
     	}
 		return false;
     }
@@ -110,18 +132,35 @@ public class GPSPeedo extends Activity {
     	mirror = true;
     }
     
+    private void about() {
+    	// show about dialogue.
+    	AlertDialog builder;
+    	try {
+    		builder = AboutDialogBuilder.create(this);
+    		builder.show();
+    	} catch (NameNotFoundException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	
+    }
+    
     @Override
     public void onPause() {
+    	Log.i("GPSPeedo","Paused");
     	lm.removeUpdates(locationListener);
     	super.onPause();
     }
     
     @Override
     public void onResume() {
+    	Log.i("GPSPeedo","Resumed");
     	lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     	super.onResume();
     }
 
+    
+    
     private class MyLocationListener implements LocationListener {
     	Integer counter = 0;
     	
@@ -145,13 +184,12 @@ public class GPSPeedo extends Activity {
                 	try {
                 		// get the distance and time between the current position, and the previous position.
                 		// using (counter - 1) % data_points doesn't wrap properly
-                		d1 = distance(positions[counter][0], positions[counter][1], positions[(counter+(data_points - 1)) % data_points][0], positions[(counter + (data_points -1)) %data_points][1],'K');
+                		d1 = distance(positions[counter][0], positions[counter][1], positions[(counter+(data_points - 1)) % data_points][0], positions[(counter + (data_points -1)) %data_points][1]);
                 		t1 = times[counter] - times[(counter + (data_points - 1)) % data_points];
                  	} 
                 	catch (NullPointerException e) {
                 		//all good, just not enough data yet.
                 	}
-                d1 = d1 * 1000.0; // km -> m
                 speed = d1 / t1; // m/s
                 }                
                 counter = (counter + 1) % data_points;
@@ -195,21 +233,15 @@ public class GPSPeedo extends Activity {
         }
         
         // private functions       
-        private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
-        	// haversine great circle distance approximation.
+        private double distance(double lat1, double lon1, double lat2, double lon2) {
+        	// haversine great circle distance approximation, returns meters
         	double theta = lon1 - lon2;
         	double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
         	dist = Math.acos(dist);
         	dist = rad2deg(dist);
-        	dist = dist * 60 * 1.1515;
-        	if (unit == 'K') {
-        		dist = dist * 1.609344;
-        	  	} else if (unit == 'N') {
-        	  	dist = dist * 0.8684;
-        	    } else if (unit == 'M') {
-        	    	dist = dist * 1609.344;
-        	    }
-        	  return (dist);
+        	dist = dist * 60; // 60 nautical miles per degree of seperation
+        	dist = dist * 1852; // 1852 meters per nautical mile  
+        	return (dist);
         	}
 
         	private double deg2rad(double deg) {
@@ -220,6 +252,34 @@ public class GPSPeedo extends Activity {
         	  return (rad * 180.0 / Math.PI);
         	}        	
     }
+    
+    public static class AboutDialogBuilder {
+    	// simple dialog builder.
+    	
+    	public static AlertDialog create( Context context ) throws NameNotFoundException {
+    		// grab the package details
+    		PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+    		
+    		// stuff the info into useful strings
+    		String about_title = String.format("About %s", context.getString(R.string.app_name));
+    		String version_string = String.format("Version: %s", pInfo.versionName);
+    		String about_text = context.getString(R.string.about_string);
+    				
+    		final TextView about_view = new TextView(context);
+    		
+    		final SpannableString s = new SpannableString(about_text);
+    		about_view.setPadding(3, 1, 3, 1);
+    		about_view.setText(version_string + "\n" + s);
+    		
+    		// turn "http://*" into a clickable link
+    		Linkify.addLinks(about_view, Linkify.ALL);
+
+    		// build and return the dialog
+    		return new AlertDialog.Builder(context).setTitle(about_title).setCancelable(true).setIcon(R.drawable.icon).setPositiveButton(
+    			 context.getString(android.R.string.ok), null).setView(about_view).create();
+    	}
+    }
+    
 }
 
 class ReverseString {
