@@ -20,27 +20,24 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int LinearLayout01=0x7f060002;
-        public static final int about_menu=0x7f06000f;
-        public static final int about_ok=0x7f060001;
-        public static final int colour_blue=0x7f06000d;
-        public static final int colour_green=0x7f06000b;
-        public static final int colour_red=0x7f06000c;
-        public static final int colour_white=0x7f06000e;
-        public static final int kmph=0x7f060006;
-        public static final int knots=0x7f060008;
-        public static final int menu_toggle=0x7f060004;
-        public static final int mph=0x7f060007;
-        public static final int mps=0x7f060009;
-        public static final int speed_view=0x7f060003;
-        public static final int submenu=0x7f060005;
-        public static final int submenu2=0x7f06000a;
-        public static final int title_about=0x7f060000;
+        public static final int LinearLayout01=0x7f060000;
+        public static final int about_menu=0x7f06000d;
+        public static final int colour_blue=0x7f06000b;
+        public static final int colour_green=0x7f060009;
+        public static final int colour_red=0x7f06000a;
+        public static final int colour_white=0x7f06000c;
+        public static final int kmph=0x7f060004;
+        public static final int knots=0x7f060006;
+        public static final int menu_toggle=0x7f060002;
+        public static final int mph=0x7f060005;
+        public static final int mps=0x7f060007;
+        public static final int speed_view=0x7f060001;
+        public static final int submenu=0x7f060003;
+        public static final int submenu2=0x7f060008;
     }
     public static final class layout {
-        public static final int about=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int menu=0x7f030002;
+        public static final int main=0x7f030000;
+        public static final int menu=0x7f030001;
     }
     public static final class string {
         public static final int about_ok=0x7f050009;
