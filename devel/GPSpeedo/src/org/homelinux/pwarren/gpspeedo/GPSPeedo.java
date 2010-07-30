@@ -116,7 +116,6 @@ public class GPSPeedo extends Activity {
         // use the LocationManager class to obtain GPS locations
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
         locationListener = new MyLocationListener();
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);   
     }
 
     private void unMirror() {        
