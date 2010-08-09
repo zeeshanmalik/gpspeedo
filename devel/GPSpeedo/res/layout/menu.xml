@@ -5,49 +5,9 @@
 		android:title="@string/title_toggle"
 		/>
 	<item
-		android:id="@+id/submenu"
-		android:title="@string/title_set_units">
-		<menu>
-			<item
-				android:id="@+id/kmph"
-				android:title="@string/title_kmph"
-				/>
-			<item
-				android:id="@+id/mph"
-				android:title="@string/title_mph"
-				/>
-			<item
-				android:id="@+id/knots"
-				android:title="@string/title_knots"
-				/>
-			<item
-				android:id="@+id/mps"
-				android:title="@string/title_mps"
-				/>
-		</menu>
-	</item>
-	<item
-		android:id="@+id/submenu2"
-		android:title="@string/title_colour">
-		<menu>
-			<item
-				android:id="@+id/colour_green"
-				android:title="@string/green"
-				/>
-			<item
-				android:id="@+id/colour_red"
-				android:title="@string/red"
-				/>
-			<item
-				android:id="@+id/colour_blue"
-				android:title="@string/blue"
-				/>
-			<item
-				android:id="@+id/colour_white"
-				android:title="@string/white"
-				/>	
-		</menu>
-	</item>
+		android:id="@+id/preferences"
+		android:title="@string/title_preferences"
+		/>
 	<item
 		android:id="@+id/about_menu"
 		android:title="@string/title_about"

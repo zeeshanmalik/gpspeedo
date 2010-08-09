@@ -5,7 +5,7 @@
 		android:title="HUD" 
 		android:summaryOn="HUD Display" 
 		android:key="hud" 
-		android:summaryOff="No HUD Display">
+		android:summaryOff="Normal Display">
 	</CheckBoxPreference>
 	<ListPreference 
 		android:summary="Speed Units" 

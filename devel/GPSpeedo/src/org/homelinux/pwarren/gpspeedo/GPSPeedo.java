@@ -1,11 +1,15 @@
 package org.homelinux.pwarren.gpspeedo;
 
 import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,13 +28,17 @@ public class GPSPeedo extends Activity {
     private LocationManager lm;
     private LocationListener locationListener;
     private Integer data_points = 2; // how many data points to calculate for
-    private TextView tv;
-    private Integer units;
-    
+    private TextView tv; // main data view
+    private Integer units; // displayed units
     private Double[][] positions;
     private Long[] times;
     private Boolean mirror;
-
+    
+    public static final String PREFS_PRIVATE = "PREFS_PRIVATE";
+    public static final String KEY_PRIVATE = "KEY_PRIVATE";
+    
+    public SharedPreferences app_prefs;
+    
     @Override
     /** Called when menu instantiated */
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,37 +58,14 @@ public class GPSPeedo extends Activity {
     			reMirror();
     		}
     		return true;
-    	case R.id.kmph:
-    		// change to specified units
-    		units = R.id.kmph;
-    		return true;
-    	case R.id.mph:
-    		// change to specified units
-    		units = R.id.mph;
-    		return true;
-    	case R.id.knots:
-    		// change to specified units
-    		units = R.id.knots;
-    		return true;
-    	case R.id.mps:
-    		// change to specified units
-    		units = R.id.mps; 
-    		return true;
-    	case R.id.colour_red:
-    		tv.setTextColor(getResources().getColor(R.color.red));
-    		return true;
-    	case R.id.colour_green:
-    		tv.setTextColor(getResources().getColor(R.color.green));
-    		return true;
-    	case R.id.colour_blue:
-    		tv.setTextColor(getResources().getColor(R.color.blue));
-    		return true;
-    	case R.id.colour_white:
-    		tv.setTextColor(getResources().getColor(R.color.white));
-    		return true;
     	case R.id.about_menu:
     		// show about dialog
     		about();
+    		return true;
+    	case R.id.preferences:
+    		// show preferences menu
+    		Intent i = new Intent(GPSPeedo.this, Preferences.class);
+			startActivity(i);
     		return true;
     	}
 		return false;
@@ -94,6 +79,9 @@ public class GPSPeedo extends Activity {
         // setup screen content to follow xml layout.
         setContentView(R.layout.main);         
         
+        // get shared preferences
+        app_prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        
         // two arrays for position and time.
         positions = new Double[data_points][2];
         times = new Long[data_points];
@@ -106,17 +94,39 @@ public class GPSPeedo extends Activity {
         tv.setTextSize(240.0f);
         tv.setTextColor(getResources().getColor(R.color.green));
         tv.setText("000");
-        
-        // set default units to Km/h
-        units = R.id.kmph;
-        
-        // set to non-hud mode
-        unMirror();        
                 
+        // unmirror my default
+        unMirror();
+        
         // use the LocationManager class to obtain GPS locations
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
         locationListener = new MyLocationListener();
     }
+    
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	
+    	
+    	// retrieve preferences.
+    	String teststr = app_prefs.getString("units","kmph");
+    	Log.i("GPSPeedo",teststr);
+    }
+    
+    @Override
+    public void onPause() {
+    	Log.i("GPSPeedo","Paused");
+    	lm.removeUpdates(locationListener);
+    	super.onPause();
+    }
+    
+    @Override
+    public void onResume() {
+    	Log.i("GPSPeedo","Resumed");
+    	lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+    	super.onResume();
+    }
+
 
     private void unMirror() {        
     	Typeface seven_seg = Typeface.createFromAsset(getAssets(), "fonts/7seg.ttf");
@@ -143,21 +153,6 @@ public class GPSPeedo extends Activity {
     	}
     	
     }
-    
-    @Override
-    public void onPause() {
-    	Log.i("GPSPeedo","Paused");
-    	lm.removeUpdates(locationListener);
-    	super.onPause();
-    }
-    
-    @Override
-    public void onResume() {
-    	Log.i("GPSPeedo","Resumed");
-    	lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-    	super.onResume();
-    }
-
     
     
     private class MyLocationListener implements LocationListener {
