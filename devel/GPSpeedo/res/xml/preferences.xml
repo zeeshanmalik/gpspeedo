@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  	xmlns:android="http://schemas.android.com/apk/res/android">
+	<CheckBoxPreference 
+		android:title="HUD" 
+		android:summaryOn="HUD Display" 
+		android:key="hud" 
+		android:summaryOff="No HUD Display">
+	</CheckBoxPreference>
+	<ListPreference 
+		android:summary="Speed Units" 
+		android:dialogTitle="Units" 
+		android:title="Units" 
+		android:key="units" 
+		android:entryValues="@array/unitsValues" 
+		android:entries="@array/unitsEntries">
+	</ListPreference>
+</PreferenceScreen>
