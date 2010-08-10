@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GPSpeedo</string>
-    <string name="title_toggle">Toggle HUD</string>
+    
     <string name="title_set_units">Set Units</string>
     <string name="title_kmph">Km/h</string>
     <string name="title_mph">miles/h</string>
@@ -11,7 +11,7 @@
 	<string name="title_about">About</string>
 	<string name="about_ok">Ok</string>
 	<string name="about_string">This program is distributed under the GPLv3 license\nGoto http://code.google.com/p/gpspeedo for more information, source, a bug tracker and a donate link. Email gpspeedo@gmail.com with comments/criticism or for help</string>
-	<string name="title_colour">Set Colour</string>
+	<string name="title_color">Set Color</string>
 	<string name="green">Green</string>
 	<string name="blue">Blue</string>
 	<string name="red">Red</string>

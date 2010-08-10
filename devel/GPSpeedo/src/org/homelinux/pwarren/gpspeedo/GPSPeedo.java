@@ -18,6 +18,7 @@ import android.text.SpannableString;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +33,7 @@ public class GPSPeedo extends Activity {
     private Integer units; // displayed units
     private Double[][] positions;
     private Long[] times;
-    private Boolean mirror;
+    private Boolean mirror_pref;
     
     public static final String PREFS_PRIVATE = "PREFS_PRIVATE";
     public static final String KEY_PRIVATE = "KEY_PRIVATE";
@@ -51,13 +52,6 @@ public class GPSPeedo extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
-    	case R.id.menu_toggle:
-    		if (mirror) {
-    			unMirror();
-    		} else {
-    			reMirror();
-    		}
-    		return true;
     	case R.id.about_menu:
     		// show about dialog
     		about();
@@ -76,6 +70,7 @@ public class GPSPeedo extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // setup screen content to follow xml layout.
         setContentView(R.layout.main);         
         
@@ -92,7 +87,6 @@ public class GPSPeedo extends Activity {
         // set up speed text view
         tv = (TextView) findViewById(R.id.speed_view);
         tv.setTextSize(240.0f);
-        tv.setTextColor(getResources().getColor(R.color.green));
         tv.setText("000");
                 
         // unmirror my default
@@ -106,39 +100,71 @@ public class GPSPeedo extends Activity {
     @Override
     public void onStart() {
     	super.onStart();
-    	
-    	
     	// retrieve preferences.
-    	String teststr = app_prefs.getString("units","kmph");
-    	Log.i("GPSPeedo",teststr);
-    }
+    	// Units to display
+    	String units_str = app_prefs.getString("units","kmph");
+    	units = parseUnits(units_str);
+    	
+    	// HUD or normal
+    	mirror_pref = app_prefs.getBoolean("hud",false);
+    	if (mirror_pref) {
+    		reMirror();
+    	}
+    	else {	
+    		unMirror();
+    	}
+    	
+    	// display color
+    	String color_str = app_prefs.getString("color","Green");
+    	Integer parsed_color = parseColor(color_str);
+    	Integer color_id = getResources().getColor(parsed_color);
+    	tv.setTextColor(color_id);
+    	}
+    
+	@Override
+    public void onStop() {
+    	super.onStop();
+	}
     
     @Override
     public void onPause() {
-    	Log.i("GPSPeedo","Paused");
     	lm.removeUpdates(locationListener);
     	super.onPause();
     }
     
     @Override
     public void onResume() {
-    	Log.i("GPSPeedo","Resumed");
-    	lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     	super.onResume();
+    	lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 
+    
+    // surely there's a better way to handle preferences involving lists of integers?
+    public Integer parseUnits(String input) {
+    	if (input.equals("kmph")) return R.id.kmph;
+    	if (input.equals("mph")) return R.id.mph;
+    	if (input.equals("knots"))return R.id.knots;
+    	if (input.equals("mps")) return R.id.mps;
+    	return null;
+    }
+    
+   private Integer parseColor(String input) {
+	   if (input.equals("Red")) return R.color.red;
+	   if (input.equals("Green")) return R.color.green;	   
+	   if (input.equals("Blue")) return R.color.blue;
+	   if (input.equals("White")) return R.color.white;
+	   return null;
+	}
 
     private void unMirror() {        
     	Typeface seven_seg = Typeface.createFromAsset(getAssets(), "fonts/7seg.ttf");
-    	tv.setTypeface(seven_seg);
-        mirror = false;
+    	tv.setTypeface(seven_seg);    	
     }
     
     private void reMirror() {
     	Typeface seven_seg = Typeface.createFromAsset(getAssets(), "fonts/7segm.ttf");
     	tv.setTypeface(seven_seg);
     	tv.setText(ReverseString.reverseIt(tv.getText().toString()));
-    	mirror = true;
     }
     
     private void about() {
@@ -202,7 +228,7 @@ public class GPSPeedo extends Activity {
                 }
                 
                 speed_string = String.format("%03d",  (int) Math.rint(speed));
-                if (mirror) {
+                if (mirror_pref) {
                 	speed_string = ReverseString.reverseIt(speed_string);
                 }
                 tv.setText(speed_string);
@@ -211,19 +237,19 @@ public class GPSPeedo extends Activity {
 
         public void onProviderDisabled(String provider) {
             // TODO Auto-generated method stub
-            Log.i("GPSpeedo", "provider disabled : " + provider);
+            Log.i(getResources().getString(R.string.app_name), "provider disabled : " + provider);
         }
 
  
         public void onProviderEnabled(String provider) {
             // TODO Auto-generated method stub
-            Log.i("GPSpeedo", "provider enabled : " + provider);
+            Log.i(getResources().getString(R.string.app_name), "provider enabled : " + provider);
         }
 
    
         public void onStatusChanged(String provider, int status, Bundle extras) {
             // TODO Auto-generated method stub
-            Log.i("GPSpeedo", "status changed : " + extras.toString());
+            Log.i(getResources().getString(R.string.app_name), "status changed : " + extras.toString());
         }
         
         // private functions       

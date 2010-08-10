@@ -8,11 +8,19 @@
 		android:summaryOff="Normal Display">
 	</CheckBoxPreference>
 	<ListPreference 
-		android:summary="Speed Units" 
-		android:dialogTitle="Units" 
-		android:title="Units" 
+		android:summary="Display Units" 
+		android:dialogTitle="@string/title_set_units"
+		android:title="@string/title_set_units"
 		android:key="units" 
 		android:entryValues="@array/unitsValues" 
-		android:entries="@array/unitsEntries">
+		android:entries="@array/unitsValues">
 	</ListPreference>
+	<ListPreference
+		android:summary="Display Color"
+		android:dialogTitle="Color"
+		android:title="@string/title_color"
+		android:key="color"
+		android:entryValues="@array/colorValues"
+		android:entries="@array/colorValues"
+		></ListPreference>
 </PreferenceScreen>
