@@ -88,10 +88,7 @@ public class GPSPeedo extends Activity {
         tv = (TextView) findViewById(R.id.speed_view);
         tv.setTextSize(240.0f);
         tv.setText("000");
-                
-        // unmirror my default
-        unMirror();
-        
+
         // use the LocationManager class to obtain GPS locations
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
         locationListener = new MyLocationListener();
@@ -141,10 +138,10 @@ public class GPSPeedo extends Activity {
     
     // surely there's a better way to handle preferences involving lists of integers?
     public Integer parseUnits(String input) {
-    	if (input.equals("kmph")) return R.id.kmph;
-    	if (input.equals("mph")) return R.id.mph;
+    	if (input.equals("km/h")) return R.id.kmph;
+    	if (input.equals("mi/h")) return R.id.mph;
     	if (input.equals("knots"))return R.id.knots;
-    	if (input.equals("mps")) return R.id.mps;
+    	if (input.equals("m/s")) return R.id.mps;
     	return null;
     }
     
