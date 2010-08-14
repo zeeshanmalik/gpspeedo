@@ -2,6 +2,7 @@ package org.homelinux.pwarren.gpspeedo;
 
 import android.app.Activity;
 
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,7 @@ import android.text.SpannableString;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
-import android.graphics.Color;
+//import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,7 +100,7 @@ public class GPSPeedo extends Activity {
     	super.onStart();
     	// retrieve preferences.
     	// Units to display
-    	String units_str = app_prefs.getString("units","kmph");
+    	String units_str = app_prefs.getString("units","km/h");
     	units = parseUnits(units_str);
     	
     	// HUD or normal
@@ -138,6 +139,8 @@ public class GPSPeedo extends Activity {
     
     // surely there's a better way to handle preferences involving lists of integers?
     public Integer parseUnits(String input) {
+    	
+    	Log.i("GPSPeedo","parseUnits(" + input +")");
     	if (input.equals("km/h")) return R.id.kmph;
     	if (input.equals("mi/h")) return R.id.mph;
     	if (input.equals("knots"))return R.id.knots;
