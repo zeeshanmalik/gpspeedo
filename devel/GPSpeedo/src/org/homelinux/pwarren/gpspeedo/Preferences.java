@@ -8,7 +8,6 @@ package org.homelinux.pwarren.gpspeedo;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			
 			addPreferencesFromResource(R.xml.preferences);
 	}
 }

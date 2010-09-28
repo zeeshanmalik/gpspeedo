@@ -31,10 +31,11 @@ public class GPSPeedo extends Activity {
     private LocationListener locationListener;
     private Integer data_points = 2; // how many data points to calculate for
     private TextView tv; // main data view
-    private Integer units; // displayed units
     private Double[][] positions;
     private Long[] times;
-    private Boolean mirror_pref;
+    private Boolean mirror_pref, full_screen_pref; // Preference Booleans
+    private Integer units; // Preference integers
+    private Float text_size; // Preference Float
     
     public static final String PREFS_PRIVATE = "PREFS_PRIVATE";
     public static final String KEY_PRIVATE = "KEY_PRIVATE";
@@ -87,7 +88,7 @@ public class GPSPeedo extends Activity {
 
         // set up speed text view
         tv = (TextView) findViewById(R.id.speed_view);
-        tv.setTextSize(240.0f);
+        //tv.setTextSize(text_size);
         tv.setText("000");
 
         // use the LocationManager class to obtain GPS locations
@@ -112,12 +113,34 @@ public class GPSPeedo extends Activity {
     		unMirror();
     	}
     	
+    	full_screen_pref = app_prefs.getBoolean("fs",false);
+    	
+    	if (full_screen_pref) {
+    		// set to full screen
+//    		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,   
+//    				WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+    		
+    		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+    	}
+    	else {
+    		// show notification bar
+    		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+    		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    	}
+    	
+    	
     	// display color
     	String color_str = app_prefs.getString("color","Green");
     	Integer parsed_color = parseColor(color_str);
     	Integer color_id = getResources().getColor(parsed_color);
     	tv.setTextColor(color_id);
-    	}
+    	
+    	// display size
+    	text_size = app_prefs.getFloat("text_size",260f);
+    	tv.setTextSize(text_size);
+    	
+    }
     
 	@Override
     public void onStop() {
