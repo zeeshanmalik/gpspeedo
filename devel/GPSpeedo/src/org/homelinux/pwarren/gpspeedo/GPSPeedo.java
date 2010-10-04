@@ -2,7 +2,6 @@ package org.homelinux.pwarren.gpspeedo;
 
 import android.app.Activity;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -99,6 +98,7 @@ public class GPSPeedo extends Activity {
     @Override
     public void onStart() {
     	super.onStart();
+
     	// retrieve preferences.
     	// Units to display
     	String units_str = app_prefs.getString("units","km/h");
@@ -117,9 +117,6 @@ public class GPSPeedo extends Activity {
     	
     	if (full_screen_pref) {
     		// set to full screen
-//    		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,   
-//    				WindowManager.LayoutParams.FLAG_FULLSCREEN); 
-    		
     		getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
     	}
@@ -187,7 +184,7 @@ public class GPSPeedo extends Activity {
     private void reMirror() {
     	Typeface seven_seg = Typeface.createFromAsset(getAssets(), "fonts/7segm.ttf");
     	tv.setTypeface(seven_seg);
-    	tv.setText(ReverseString.reverseIt(tv.getText().toString()));
+    	//tv.setText(ReverseString.reverseIt(tv.getText().toString())); // not needed due to better font.
     }
     
     private void about() {
