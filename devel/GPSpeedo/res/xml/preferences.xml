@@ -28,9 +28,19 @@
 		android:summaryOn="Only GPSPeedo visible"
 		android:summaryOff="Android Notification Bar Visible"
 		android:key="fs"></CheckBoxPreference>
+		<!--
 	<org.homelinux.pwarren.gpspeedo.EditFloatPreference
 		android:title="Text Size"
 		android:summary="Speedo Text Size"
 		android:key="text_size"
 		></org.homelinux.pwarren.gpspeedo.EditFloatPreference>
+		 -->
+	<org.homelinux.pwarren.gpspeedo.SeekBarPreference android:key="text_size"
+        android:title="Font Size"
+        android:summary="Display Fontsize"
+        android:defaultValue="260"
+        android:text=" pixels"
+        android:max="999"
+        />
+		
 </PreferenceScreen>

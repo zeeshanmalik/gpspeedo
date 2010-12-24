@@ -134,7 +134,7 @@ public class GPSPeedo extends Activity {
     	tv.setTextColor(color_id);
     	
     	// display size
-    	text_size = app_prefs.getFloat("text_size",260f);
+    	text_size = Float.valueOf(app_prefs.getInt("text_size",260));
     	tv.setTextSize(text_size);
     	
     }
