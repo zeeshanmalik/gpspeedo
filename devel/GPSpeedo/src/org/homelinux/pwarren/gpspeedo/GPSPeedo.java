@@ -88,8 +88,9 @@ public class GPSPeedo extends Activity {
         // set up speed text view
         tv = (TextView) findViewById(R.id.speed_view);
         //tv.setTextSize(text_size);
+        tv.setGravity(0x05|0x10);
         tv.setText("000");
-
+        
         // use the LocationManager class to obtain GPS locations
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
         locationListener = new MyLocationListener();
@@ -173,6 +174,7 @@ public class GPSPeedo extends Activity {
 	   if (input.equals("Green")) return R.color.green;	   
 	   if (input.equals("Blue")) return R.color.blue;
 	   if (input.equals("White")) return R.color.white;
+	   if (input.equals("Orange")) return R.color.orange;
 	   return null;
 	}
 
