@@ -89,7 +89,7 @@ public class GPSPeedo extends Activity {
         tv = (TextView) findViewById(R.id.speed_view);
         //tv.setTextSize(text_size);
         tv.setGravity(0x05|0x10);
-        tv.setText("000");
+        tv.setText("");
         
         // use the LocationManager class to obtain GPS locations
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
@@ -137,6 +137,14 @@ public class GPSPeedo extends Activity {
     	// display size
     	text_size = Float.valueOf(app_prefs.getInt("text_size",260));
     	tv.setTextSize(text_size);
+    	
+    	//padding
+    	Integer padding = Integer.valueOf(app_prefs.getString("padding", "3"));
+    	
+    	String format_string = "%0" + padding + "d";
+    	String value_string = String.format(format_string,0);
+    	tv.setText(value_string);
+    	
     	
     }
     

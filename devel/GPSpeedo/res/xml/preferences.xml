@@ -23,18 +23,19 @@
 		android:entryValues="@array/colorValues"
 		android:entries="@array/colorValues"
 		></ListPreference>
+	<ListPreference
+		android:summary="Number of digits to display"
+		android:dialogTitle="Padding"
+		android:title="@string/title_padding"
+		android:key="padding"
+		android:entryValues="@array/paddingStrings"
+		android:entries="@array/paddingStrings"	
+		/>
 	<CheckBoxPreference
 		android:title="Full Screen"
 		android:summaryOn="Only GPSPeedo visible"
 		android:summaryOff="Android Notification Bar Visible"
 		android:key="fs"></CheckBoxPreference>
-		<!--
-	<org.homelinux.pwarren.gpspeedo.EditFloatPreference
-		android:title="Text Size"
-		android:summary="Speedo Text Size"
-		android:key="text_size"
-		></org.homelinux.pwarren.gpspeedo.EditFloatPreference>
-		 -->
 	<org.homelinux.pwarren.gpspeedo.SeekBarPreference android:key="text_size"
         android:title="Font Size"
         android:summary="Display Fontsize"

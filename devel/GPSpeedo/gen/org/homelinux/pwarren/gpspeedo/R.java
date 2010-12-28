@@ -10,6 +10,8 @@ package org.homelinux.pwarren.gpspeedo;
 public final class R {
     public static final class array {
         public static final int colorValues=0x7f050001;
+        public static final int paddingStrings=0x7f050002;
+        public static final int paddingValues=0x7f050003;
         public static final int unitsValues=0x7f050000;
     }
     public static final class attr {
@@ -52,6 +54,7 @@ public final class R {
         public static final int title_knots=0x7f080004;
         public static final int title_mph=0x7f080003;
         public static final int title_mps=0x7f080005;
+        public static final int title_padding=0x7f080011;
         public static final int title_preferences=0x7f080010;
         public static final int title_quit=0x7f080006;
         public static final int title_set_units=0x7f080001;
