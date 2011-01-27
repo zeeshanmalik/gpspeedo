@@ -88,7 +88,7 @@ public class GPSPeedo extends Activity {
         // set up speed text view
         tv = (TextView) findViewById(R.id.speed_view);
         //tv.setTextSize(text_size);
-        tv.setGravity(0x05|0x10);
+        tv.setGravity(0x05|0x10); // Right align
         tv.setText("");
         
         // use the LocationManager class to obtain GPS locations
@@ -127,7 +127,6 @@ public class GPSPeedo extends Activity {
     		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     	}
     	
-    	
     	// display color
     	String color_str = app_prefs.getString("color","Green");
     	Integer parsed_color = parseColor(color_str);
@@ -140,7 +139,6 @@ public class GPSPeedo extends Activity {
     	
     	//padding
     	Integer padding = Integer.valueOf(app_prefs.getString("padding", "3"));
-    	
     	String format_string = "%0" + padding + "d";
     	String value_string = String.format(format_string,0);
     	tv.setText(value_string);
@@ -258,9 +256,9 @@ public class GPSPeedo extends Activity {
                 }
                 
                 speed_string = String.format("%03d",  (int) Math.rint(speed));
-                if (mirror_pref) {
-                	speed_string = ReverseString.reverseIt(speed_string);
-                }
+                //if (mirror_pref) {
+                //	speed_string = ReverseString.reverseIt(speed_string);
+                //}
                 tv.setText(speed_string);
             }
         }
