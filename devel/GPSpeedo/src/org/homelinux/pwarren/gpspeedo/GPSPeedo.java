@@ -137,14 +137,17 @@ public class GPSPeedo extends Activity {
     	text_size = Float.valueOf(app_prefs.getInt("text_size",260));
     	tv.setTextSize(text_size);
     	
-    	//padding
-    	Integer padding = Integer.valueOf(app_prefs.getString("padding", "3"));
-    	String format_string = "%0" + padding + "d";
-    	String value_string = String.format(format_string,0);
-    	tv.setText(value_string);
-    	
+    	displayText(0);
     	
     }
+
+    public void displayText(Integer input) {
+    	Integer padding = Integer.valueOf(app_prefs.getString("padding", "3"));
+    	String format_string = "%0" + padding + "d";
+    	String value_string = String.format(format_string, input);
+    	tv.setText(value_string);
+    }
+
     
 	@Override
     public void onStop() {
@@ -254,13 +257,8 @@ public class GPSPeedo extends Activity {
                 	speed = speed * 1.94384449d;
                 	break;
                 }
-                
-                speed_string = String.format("%03d",  (int) Math.rint(speed));
-                //if (mirror_pref) {
-                //	speed_string = ReverseString.reverseIt(speed_string);
-                //}
-                tv.setText(speed_string);
-            }
+                  	displayText(speed.intValue());
+        	}
         }
 
         public void onProviderDisabled(String provider) {
