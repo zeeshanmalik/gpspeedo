@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="unitsValues">
+<item>km/h</item>
+<item>mi/h</item>
+<item>knots</item>
+<item>m/s</item>
+</string-array>
+<string-array name="colorValues">
+<item>Red</item>
+<item>Green</item>
+<item>Blue</item>
+<item>Orange</item>
+<item>White</item>
+</string-array>
+<string-array name="paddingStrings">
+<item>1</item>
+<item>2</item>
+<item>3</item>
+</string-array>
+<integer-array name="paddingValues">
+<item>1</item>
+<item>2</item>
+<item>3</item>
+</integer-array>
+
+</resources>

@@ -1,4 +1,4 @@
-package org.homelinux.pwarren.gpspeedo;
+package org.homelinux.pwarren.gpspeedodonate;
 
 import android.app.Activity;
 

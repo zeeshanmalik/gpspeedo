@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package org.homelinux.pwarren.gpspeedo;
+package org.homelinux.pwarren.gpspeedodonate;
 
 public final class R {
     public static final class array {
